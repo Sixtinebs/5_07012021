@@ -1,23 +1,44 @@
 
 const $newDiv = document.createElement('div');
-let $produits = document.getElementById('produits');
+const $products = document.getElementById('products');
+const $btnProducts = document.getElementsByClassName('btn-product');
+
 
 const $request = new XMLHttpRequest();
 $request.onreadystatechange = function() {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
         const $response = JSON.parse(this.responseText);
-        $produits.innerHTML = '<p>' + $response[0].name + '</p>';
-        $cardProduit = [];
+        $products.innerHTML = '<p>' + $response[0].name + '</p>';
+        // Recover card html
+        $cardProduct = [];
+        //const $productUrl = new URL();
+        
+        // Create card html for all products
         function respName() {
             for(let i in $response) {
-                $cardProduit.push(' <div class="card mb-3" style="max-width: 540px;"><div class="row g-0"><div class="col-md-4"><img src="'+ $response[i].imageUrl +'" alt="..." style="width: 100%;" ></div><div class="col-md-8"><div class="card-body"><h5 class="card-title">'+ $response[i].name +'</h5><p class="card-text">'+ $response[i].description +'</p><p class="card-text"><small class="text-muted">' + $response[i].price +  '</small></p></div></div></div></div>');
-                $produits.innerHTML = $cardProduit;
-            }
-
-            
+                $cardProduct.push(' <div class="card mb-3" style="max-width: 540px;"><div class="row g-0"><div class="col-md-4"><img src="'+ $response[i].imageUrl +'" alt="..." style="width: 100%;" ></div><div class="col-md-8"><div class="card-body"><h5 class="card-title">'+ $response[i].name +'</h5><p class="card-text">'+ $response[i].description +'</p><p class="card-text"><small class="text-muted">' + $response[i].price +  ' € </small></p></div></div><a><button type="button" class="btn btn-outline-success btn-product" id="'+ $response[i]._id +'" value="'+ $response[i]._id +'">Mettre dans le panier</button></a></div></div>');
+                $products.innerHTML = $cardProduct;
+            } 
         }
-        console.log($cardProduit); 
+        function btnProductValue() {
+            for (let $btnProduct of $btnProducts) {
+                $btnProduct.addEventListener('click', function() {
+                    const $btnProductValue = $btnProduct.value;
+                    return $btnProductValue;
+                });
+                linkProducts();
+            }
+        }
+        function linkProducts() {
+            for (const linkProduct of linkProduct) {
+                linkProduct.href = `pages/product/?id=${response._id}`;
+            }
+        }
+        
         respName();
+        btnProductValue();
+        
+
     }
 };
 
