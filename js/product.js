@@ -1,37 +1,68 @@
-// const $localStorage = localStorage.getItem("idProduct");
-// console.log($localStorage);
 let urlcourante = document.location.href;
 const yourProduct = document.getElementById("yourProduct");
 const searchParams = new URLSearchParams(urlcourante);
+
+
+let colors = ["rose", "bleu", "vert"];
+
+// recover param of url
 function getId() {
     for (let p of searchParams) {
         return p[1];
     }
 }
-console.log(getId());
 
-const getFurniture = async function () {
+function optionsCameras(options) {
+    const newDiv = document.createElement('div');
+    const newSelect = document.createElement('select');
+    newSelect.setAttribute("name", "options");
+
+    for (option of options) {
+        const newOption = document.createElement('option');
+        newOption.setAttribute("value", option);
+
+        let contenu = document.createTextNode(option);
+        newDiv.appendChild(newSelect);
+        newSelect.appendChild(newOption);
+        newOption.appendChild(contenu);
+        document.getElementsByClassName("card-body")[0].appendChild(newDiv);
+
+    }
+}
+function setElementStorage(param, card) {
+    const newBtn = document.createElement('button');
+    newBtn.addEventListener('click', function () {
+        let storedIds = JSON.parse(localStorage.getItem("id"));
+        if(storedIds === null) {
+            storedIds =[];
+        }
+        storedIds.push(param);
+        localStorage.setItem("id", JSON.stringify(storedIds));
+        
+        console.log(storedIds);
+    })
+    card.appendChild(newBtn);
+}
+
+const getCameras = async function () {
     try {
+        const param = getId();
         //attendre un retour
-        let response = await fetch('http://localhost:3000/api/furniture')
+        let response = await fetch('http://localhost:3000/api/cameras/'+ param);
         if (response.ok) {
             let data = await response.json()
-            console.log(data);
-            for (let i of data) {
-                if(i._id == getId()){
-                    console.log(i._id);
-                    yourProduct.innerHTML =' <div class="card mb-3" style="max-width: 540px;"><div class="row g-0"><div class="col-md-4"><img src="'+ i.imageUrl +'" alt="..." style="width: 100%;" ></div><div class="col-md-8"><div class="card-body"><h5 class="card-title">'+ i.name +'</h5><p class="card-text">'+ i.description +'</p><p class="card-text"><small class="text-muted">' + i.price +  ' € </small></p></div></div><a href="pages/product.html?id='+ i._id +'"><button type="button" class="btn btn-outline-success btn-product" id="'+ i._id +'" value="'+ i.name +'">Mettre dans le panier</button></a></div></div>';
-                }
-            }
-        //console.log(data[0].name)
-    } else {
-            console.error(response.status)
+            yourProduct.innerHTML = ' <div class="card mb-3" style="max-width: 540px;"><div class="row g-0"><div class="col-md-4"><img src="' + data.imageUrl + '" alt="..." style="width: 100%;" ></div><div class="col-md-8"><div class="card-body"><h5 class="card-title">' + data.name + '</h5><p class="card-text">' + data.description + '</p><p class="card-text"><small class="text-muted">' + data.price + ' € </small></p></div></div><a href="basket.html?id=' + data._id + '"><button type="button" class="btn btn-outline-success btn-product" id="' + data._id + '" value="' + data.name + '">Voir le panier</button></a></div></div>';
+            const card = document.getElementsByClassName("card-body")[0];
+            optionsCameras(data.lenses);
+            setElementStorage(param, card);
+        } else {
+            console.error(response.status);
         }
     } catch (e) {
-        console.log(e)
+        console.log(e);
     }
 
 }
-getFurniture();
+getCameras();
 
 

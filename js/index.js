@@ -1,18 +1,15 @@
-
 const $newDiv = document.createElement('div');
 const $products = document.getElementById('products');
 const $btnProducts = document.getElementsByClassName('btn-product');
-
-
+const url = window.location;
 const $request = new XMLHttpRequest();
+
 $request.onreadystatechange = function() {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
         const $response = JSON.parse(this.responseText);
         $products.innerHTML = '<p>' + $response[0].name + '</p>';
         // Recover card html
         $cardProduct = [];
-        //const $productUrl = new URL();
-        
         // Create card html for all products
         function respName() {
             for(let i in $response) {
@@ -20,32 +17,11 @@ $request.onreadystatechange = function() {
                 $products.innerHTML = $cardProduct;
             } 
         }
-
-        function linkProducts() {
-            for (const linkProduct of linkProduct) {
-                linkProduct.href = `pages/product/?id=${response._id}`;
-            }
-        }
-        function btnProductValue() {
-            for (let $btnProduct of $btnProducts) {
-                $btnProduct.addEventListener('click', function() {
-                    const $btnProductValue = $btnProduct.value;
-                    linkProducts();
-                    return $btnProductValue;
-                    
-                });
-                
-            }
-        }
-        
         respName();
-        btnProductValue();
-        
-
     }
 };
 
-$request.open("GET", "http://localhost:3000/api/furniture");
+$request.open("GET", "http://localhost:3000/api/cameras");
 $request.send();
 
 
