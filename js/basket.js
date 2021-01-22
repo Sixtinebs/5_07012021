@@ -1,49 +1,54 @@
+const cameraPrice = [];
 // recover element of put in basket =>localStorage
 function getLocalStorage() {
     //if localStorage is empty
-    const localStorageLength = window.localStorage.length;
-    if(localStorageLength === 0){
-        // retourné un tableau vide
-        return false;
+    let localStorageGetItem = [];
+    if(window.localStorage.length === 0){
+        localStorageGetItem = [];
+        return localStorageGetItem;
     }else {
-        let localStorageGetItem = JSON.parse(localStorage.getItem("id"));
+        localStorageGetItem = JSON.parse(localStorage.getItem("id"));
         return localStorageGetItem;
     }
 }
+// display element from basket
 
+function displayBasket(camera) { 
+    cameraPrice.push(camera.price);
+    const list = document.getElementById('listProducts');
+    const listElements = document.createElement('li');
+    listElements.innerText = camera.name + ' ' + camera.price + '€';
+    list.appendChild(listElements);
+    
+ }
 
-// afficher le nom + le prix en liste des elements mis dans le panier
+ function totalPrice(listPrices){
+    let total = 0;
+    for(let i = 0; i < listPrices.length; i++){
+        total += listPrices[i];
+    }
+    const newP = document.createElement('p');
+    newP.innerText = total + '€';
+    document.getElementById('listProducts').appendChild(newP);
+}
+//Compare Api and localStorage for find good element in basket
 function findCameras(camerasFromApi) {
     const camerasFromStorage = getLocalStorage();
-    console.log(camerasFromStorage.length);
-    console.log(camerasFromApi.length);
     for(let i = 0; i < camerasFromApi.length; i++){
         for(let k = 0; k < camerasFromStorage.length; k++){
-            console.log(camerasFromStorage[k])
             if(camerasFromApi[i]._id === camerasFromStorage[k]) {
-                console.log('coucou');
+                displayBasket(camerasFromApi[i]);
             }
         } 
     }
-    console.log('rien dans le panier')
+    totalPrice(cameraPrice);
 }
 
-function displayBasket() { 
-    const yourBasket = document.getElementsByTagName('h1')[0];
-    const listProducts = document.getElementById('listProducts');
-    for(id of ids){
-        const listElement = '<li>'+resp.name+'</li>'
-        listProducts.innerHTML =  listElement;
-    }
- }
-
- //displayBasket();
-
-// faire la somme des prix
-//affichier le resultat
 // bouton pour valider le panier et passer la commande => afficher le formulaire
 //formulaire pour passer la commande: Nom prénom addresse mail, date
 // envoie au back-end correctement formaté
+// Renvoie sur la page de confirmation avec un mot
+//ajouter un bouton +/- aux articles
 
 
 

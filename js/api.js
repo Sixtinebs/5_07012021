@@ -1,9 +1,13 @@
+function getApi(apiUrl,callback) {
+    // new promesse
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            const response = JSON.parse(this.responseText);
+            callback(response);
+        }
+    };
 
-const urlApi = "http://localhost:3000/api/cameras";
-
-fetch(urlApi)
-    .then(response => {
-        response.json().then(data => {
-            return data;
-        })
-    })
+    request.open("GET", apiUrl);
+    request.send();
+}

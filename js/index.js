@@ -18,17 +18,7 @@ function createCardsCameras(response) {
         */
     } 
 }
-const url = window.location;
-const request = new XMLHttpRequest();
 
-request.onreadystatechange = function() {
-    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-        const response = JSON.parse(this.responseText);
-        createCardsCameras(response);
-    }
-};
-
-request.open("GET", "http://localhost:3000/api/cameras");
-request.send();
+getApi("http://localhost:3000/api/cameras", createCardsCameras);
 
 
