@@ -1,29 +1,29 @@
-
 // recover element of put in basket =>localStorage
 function getLocalStorage() {
     //if localStorage is empty
     const localStorageLength = window.localStorage.length;
     if(localStorageLength === 0){
+        // retourné un tableau vide
         return false;
     }else {
         let localStorageGetItem = JSON.parse(localStorage.getItem("id"));
         return localStorageGetItem;
     }
 }
-const getItems = getLocalStorage();
+
 
 // afficher le nom + le prix en liste des elements mis dans le panier
-function findCameras(response, getItems) {
-    console.log(response.length);
-    console.log(getItems.length);
-    for(let i = 0; i < response.length; i++){
-        console.log(response[i]);
-        for(let j = 0; j < getItems.length; i++){
-            console.log[j]
-            if(response[i] === getItems[j]) {
-                console.log(getItems[j]);
+function findCameras(camerasFromApi) {
+    const camerasFromStorage = getLocalStorage();
+    console.log(camerasFromStorage.length);
+    console.log(camerasFromApi.length);
+    for(let i = 0; i < camerasFromApi.length; i++){
+        for(let k = 0; k < camerasFromStorage.length; k++){
+            console.log(camerasFromStorage[k])
+            if(camerasFromApi[i]._id === camerasFromStorage[k]) {
+                console.log('coucou');
             }
-        }
+        } 
     }
     console.log('rien dans le panier')
 }
@@ -52,7 +52,7 @@ request.onreadystatechange = function() {
     // if request done and status = 200 => transform the response in object javascript (JSON)
     if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
         const response = JSON.parse(this.responseText);
-        findCameras(response, getItems);
+        findCameras(response);
     }
 };
 

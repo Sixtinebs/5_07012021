@@ -51,7 +51,7 @@ const getCameras = async function () {
         let response = await fetch('http://localhost:3000/api/cameras/'+ param);
         if (response.ok) {
             let data = await response.json()
-            yourProduct.innerHTML = ' <div class="card mb-3" style="max-width: 540px;"><div class="row g-0"><div class="col-md-4"><img src="' + data.imageUrl + '" alt="..." style="width: 100%;" ></div><div class="col-md-8"><div class="card-body"><h5 class="card-title">' + data.name + '</h5><p class="card-text">' + data.description + '</p><p class="card-text"><small class="text-muted">' + data.price + ' € </small></p></div></div><a href="basket.html?id=' + data._id + '"><button type="button" class="btn btn-outline-success btn-product" id="' + data._id + '" value="' + data.name + '">Voir le panier</button></a></div></div>';
+            yourProduct.innerHTML = ' <div class="card mb-3" style="max-width: 540px;"><div class="row g-0"><div class="col-md-4"><img src="' + data.imageUrl + '" alt="..." style="width: 100%;" ></div><div class="col-md-8"><div class="card-body"><h5 class="card-title">' + data.name + '</h5><p class="card-text">' + data.description + '</p><p class="card-text"><small class="text-muted">' + data.price + ' € </small></p></div></div><a href="basket.html"><button type="button" class="btn btn-outline-success btn-product" id="' + data._id + '" value="' + data.name + '">Voir le panier</button></a></div></div>';
             const card = document.getElementsByClassName("card-body")[0];
             chooseOptionsCameras(data.lenses);
             setElementStorage(param, card);
