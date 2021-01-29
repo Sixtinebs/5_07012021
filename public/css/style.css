@@ -1,0 +1,47 @@
+#intro {
+  display: flex;
+  flex-flow: column;
+  margin: 20px;
+}
+#intro h1 {
+  align-self: center;
+}
+#intro p {
+  align-self: flex-end;
+  margin: 0 60px;
+}
+
+#products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 100px;
+}
+#products img {
+  height: 100%;
+  object-fit: cover;
+}
+#products .card {
+  margin-bottom: 50px;
+}
+
+.card-body {
+  display: flex;
+  flex-flow: column;
+}
+.card-body .card-title {
+  align-self: center;
+}
+.card-body .card-price {
+  align-self: flex-end;
+}
+
+#yourProduct .card {
+  margin: 60px;
+}
+#yourProduct .card img {
+  height: 100%;
+  object-fit: cover;
+}
+
+/*# sourceMappingURL=style.css.map */

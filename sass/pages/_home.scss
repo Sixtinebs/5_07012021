@@ -1,0 +1,36 @@
+#intro {
+    display: flex;
+    flex-flow: column;
+    margin: 20px;
+    h1 {
+       align-self: center;
+    }
+    p {
+        align-self: flex-end;
+        margin: 0 60px;
+    }
+}
+#products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 100px;
+    img {
+        height: 100%;
+        object-fit: cover;
+    }
+    .card{
+        margin-bottom: 50px;
+    }
+}
+ 
+.card-body {
+    display: flex;
+    flex-flow: column;
+    .card-title {
+        align-self: center;
+    }
+    .card-price {
+        align-self: flex-end;
+    }
+}

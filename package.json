@@ -1,0 +1,22 @@
+{
+  "name": "orinoco",
+  "version": "1.0.0",
+  "description": "App for buy the best cameras !",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch ./sass/main.scss:public/css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sixtinebs/5_07012021.git"
+  },
+  "author": "Sixtine BS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sixtinebs/5_07012021/issues"
+  },
+  "homepage": "https://github.com/Sixtinebs/5_07012021#readme",
+  "dependencies": {
+    "sass": "^1.32.5"
+  }
+}

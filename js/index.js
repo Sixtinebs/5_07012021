@@ -1,24 +1,60 @@
-function createCardsCameras(response) {
-    const products = document.getElementById('products');
-    products.innerHTML = '<p>' + response[0].name + '</p>';
-    // Recover card html
-    cardProductuest = [];
-    // Create card html for all products
-    for(let i in response) {
-        cardProductuest.push('<div class="card mb-3" style="max-width: 540px;"><div class="row g-0"><div class="col-md-4"><img src="'+ response[i].imageUrl +'" alt="..." style="width: 100%;" ></div><div class="col-md-8"><div class="card-body"><h5 class="card-title">'+ response[i].name +'</h5><p class="card-text">'+ response[i].description +'</p><p class="card-text"><small class="text-muted">' + response[i].price +  ' € </small></p></div></div><a href="pages/product.html?id='+ response[i]._id +'"><button type="button" class="btn btn-outline-success btn-product" id="'+ response[i]._id +'" value="'+ response[i]._id +'">Mettre dans le panier</button></a></div></div>');
-        products.innerHTML = cardProductuest;
-        /*
-        const card = document.createElement('div');
-        card.style.maxWidth = "540px";
-        card.attributes = "class", "card mb-3";
-        products.appendChild(card);
-        console.log(card);
+function createHtmlCard(element) {
+    const card = document.createElement('div');
+    card.style.maxWidth = "540px";
+    card.classList =  "card";
+    products.appendChild(card);
     
-        const row = document.createElement('')
-        */
+    const row = document.createElement('div');
+    row.classList = "row g-0";
+    card.appendChild(row);
+
+    const col = document.createElement('div');
+    col.classList = "col-md-4";
+    row.appendChild(col);
+
+    const img = document.createElement('img');
+    img.style.width = "100%";
+    img.src = element.imageUrl;
+    col.appendChild(img);
+
+    const col2 = document.createElement('div');
+    col2.classList = "col-md-8";
+    row.appendChild(col2);
+
+    const cardBody = document.createElement('div');
+    cardBody.classList = "card-body";
+    col2.appendChild(cardBody);
+
+    const titleName = document.createElement('h5');
+    titleName.classList = "card-title";
+    titleName.innerText = element.name;
+    cardBody.appendChild(titleName);
+
+    const cardText = document.createElement('p');
+    cardText.classList = "card-text";
+    cardText.innerText = element.description;
+    cardBody.appendChild(cardText);
+
+    const cardPrice = document.createElement('p');
+    cardPrice.classList = "card-price";
+    cardPrice.innerText = element.price + '€';
+    cardBody.appendChild(cardPrice);
+    
+    const btn = document.createElement('a');
+    btn.classList = "btn btn-outline-success btn-product";
+    btn.href = "pages/product.html?id=" + element._id;
+    btn.attributes = "role", "button";
+    btn.innerText = "Voir plus";
+    cardBody.appendChild(btn);
+}
+
+function displayListProducts(response) {
+    for(let i in response) {
+        createHtmlCard(response[i])  
     } 
 }
 
-getApi("http://localhost:3000/api/cameras", createCardsCameras);
+
+getApi("http://localhost:3000/api/cameras", displayListProducts);
 
 
