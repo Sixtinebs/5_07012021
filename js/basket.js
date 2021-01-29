@@ -1,4 +1,7 @@
 const cameraPrice = [];
+let products = localStorage.getItem("id");
+let contact = {};
+
 // recover element of put in basket =>localStorage
 function getLocalStorage() {
     //if localStorage is empty
@@ -7,7 +10,7 @@ function getLocalStorage() {
         localStorageGetItem = [];
         return localStorageGetItem;
     } else {
-        localStorageGetItem = JSON.parse(localStorage.getItem("id"));
+        localStorageGetItem = JSON.parse(products);
         return localStorageGetItem;
     }
 }
@@ -76,10 +79,7 @@ function validateEmail() {
     }
 
 }
-let data = {};
-function getFormField(elementField) {
-    //console.log(data);
-}
+//validateEmail();
 function checkboxEmpty() {
     const gridCheck = document.getElementById('gridCheck');
     if(gridCheck.checked == false) {
@@ -97,8 +97,8 @@ function inputEmpty() {
                 input.style.border = "2px solid #dc3545";
                 inputEmpty =  false;
             } else  {
-                //input.style.border = "2px solid #3ed000";
-                getFormField(input.value);
+                input.style.border = "2px solid #3ed000";
+                getFormField(input.name, input.value);
             }
         }
         if(inputEmpty === false ) {
@@ -113,16 +113,27 @@ function submitForm() {
     const btnSubmit = document.getElementById('btn-submit');
     btnSubmit.addEventListener('click', function (e) {
         e.preventDefault();
-        sendPost(inputEmpty(), checkboxEmpty(),validateEmail() );
+        const input = inputEmpty();
+        const checkbox = checkboxEmpty();
+        sendPost(input, checkbox);
+
     })
 }
-function sendPost(input, checkbox, validation) {
-    if((input === true) && (checkbox === true) && (validation === true)) {
-        postApi();
+function sendPost(input, checkbox) {
+    let formData = {contact, products};
+    postApi(formData);
+    if((input === true) && (checkbox === true)) {
+        //postApi(formData);
     }
+    
 }
 
-// envoie post l'objet avec l'objet contact et le tableau product
+function getFormField(name, value) {
+    contact[name] = value;
+}
+
+
+// récuperer la réponsonse
 // Renvoie sur la page de confirmation avec un mot + id de réponse
 // ajouter un bouton +/- aux articles
 //créer une page si aucun article dans le panier
@@ -137,11 +148,17 @@ function sendPost(input, checkbox, validation) {
 
 function postApi(body) {
     const request = new XMLHttpRequest();
-    //const formData = new FormData(body);
-    request.open("POST", "http://localhost:3000/api/cameras/order");
-    // récuperer la réponse
-    // for more information
-    request.setRequestHeader("Content-Type", "application/json");
-    // send json -> service web
-    request.send(JSON.stringify(body));
+        request.onreadystatechange = function () {
+            if (this.readyState == XMLHttpRequest.DONE && this.status == 201) {
+                const response = JSON.parse(this.responseText);
+                console.log(response);
+            } else {
+                console.log('je passe par la');
+            }
+        };
+        request.open("POST", "http://localhost:3000/api/cameras/order");
+        // for more information
+        request.setRequestHeader("Content-Type", "application/json");
+        // send json -> service web
+        request.send(JSON.stringify(body));
 }
