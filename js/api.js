@@ -1,4 +1,4 @@
-function getApi(apiUrl,callback) {
+function getApi(apiUrl, callback) {
     // new promesse
     const request = new XMLHttpRequest();
     request.onreadystatechange = function () {

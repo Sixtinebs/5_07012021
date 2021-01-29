@@ -1,6 +1,7 @@
 #intro {
   display: flex;
   flex-flow: column;
+  background-color: aquamarine;
   margin: 20px;
 }
 #intro h1 {
