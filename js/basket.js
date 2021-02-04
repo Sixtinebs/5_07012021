@@ -152,11 +152,6 @@ function sendPost(input, checkbox) {
 })
 .then(response => response.json())
 .catch((error) => alert("Erreur : " + error))
-/* Envoie seulement si tout est ok
-    if((input === true) && (checkbox === true)) {
-        //postApi(formData);
-    }
-    */
 }
 
 
