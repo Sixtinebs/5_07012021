@@ -116,16 +116,10 @@ function submitForm() {
         const input = inputEmpty();
         const checkbox = checkboxEmpty();
         sendPost(input, checkbox);
+        console.log(input);
+        console.log(checkbox);
 
     })
-}
-function sendPost(input, checkbox) {
-    let formData = {contact, products};
-    postApi(formData);
-    if((input === true) && (checkbox === true)) {
-        //postApi(formData);
-    }
-    
 }
 
 function getFormField(name, value) {
@@ -133,7 +127,7 @@ function getFormField(name, value) {
 }
 
 
-// récuperer la réponsonse
+// récuperer la réponse
 // Renvoie sur la page de confirmation avec un mot + id de réponse
 // ajouter un bouton +/- aux articles
 //créer une page si aucun article dans le panier
@@ -146,6 +140,27 @@ function getFormField(name, value) {
     getApi('http://localhost:3000/api/cameras/', findCameras);
 })();
 
+function sendPost(input, checkbox) {
+    let formData = {contact, products};
+    console.log(formData);
+    fetch('http://localhost:3000/api/cameras/order', {
+    method: 'POST',
+    body: JSON.stringify(formData),
+    headers : {
+        "Content-Type": "application/json"
+    }
+})
+.then(response => response.json())
+.catch((error) => alert("Erreur : " + error))
+/* Envoie seulement si tout est ok
+    if((input === true) && (checkbox === true)) {
+        //postApi(formData);
+    }
+    */
+}
+
+
+/*
 function postApi(body) {
     const request = new XMLHttpRequest();
         request.onreadystatechange = function () {
@@ -162,3 +177,4 @@ function postApi(body) {
         // send json -> service web
         request.send(JSON.stringify(body));
 }
+*/
