@@ -1,5 +1,6 @@
 const cameraPrice = [];
-let products = localStorage.getItem("id");
+let product_id = [];
+let cameras = [];
 //let products = localStorage.getItem("id");
 let contact = {};
 
@@ -11,7 +12,7 @@ function getLocalStorage() {
         localStorageGetItem = [];
         return localStorageGetItem;
     } else {
-        localStorageGetItem = JSON.parse(products);
+        localStorageGetItem = JSON.parse(localStorage.getItem("id"));
         return localStorageGetItem;
     }
 }
@@ -35,7 +36,7 @@ function displayBasket(camera) {
     const listElements = document.createElement('li');
     listElements.innerText = camera.name + ' ' + camera.price + '€';
     list.appendChild(listElements);
-
+    product_id.push(camera._id);
 }
 
 function totalPrice(listPrices) {
@@ -116,9 +117,9 @@ function submitForm() {
         e.preventDefault();
         const input = inputEmpty();
         const checkbox = checkboxEmpty();
-        sendPost(input, checkbox);
-
-
+        if((input === true) && (checkbox === true)) { 
+            sendPost();
+        }
     })
 }
 
@@ -140,42 +141,25 @@ function getFormField(name, value) {
     getApi('http://localhost:3000/api/cameras/', findCameras);
 })();
 
-function sendPost(input, checkbox) {
-    let formData = {contact : contact , products : products};
-    console.log(formData);
-    fetch('http://localhost:3000/api/cameras/order', {
-    method: 'POST',
-    body: JSON.stringify(formData),
-    headers : {
-        "Content-Type": "application/json"
+function sendPost() {
+        let formData = {contact : contact , products : product_id};
+        console.log(formData);
+        fetch('http://localhost:3000/api/cameras/order', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers : {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+        JSON.parse(response)
+        localStorage.setItem('order_id', response.orderId);
+        console.log(response);
+        console.log(response.orderId);
+        //window.location.href = "confirmation.html";
+    })
+    .catch((error) => alert("Erreur : " + error))
     }
-})
-.then(response => response.json())
-.then(response => console.log(response))
-.catch((error) => alert("Erreur : " + error))
-/* Envoie seulement si tout est ok
-    if((input === true) && (checkbox === true)) {
-        //postApi(formData);
-    }
-    */
-}
 
 
-/*
-function postApi(body) {
-    const request = new XMLHttpRequest();
-        request.onreadystatechange = function () {
-            if (this.readyState == XMLHttpRequest.DONE && this.status == 201) {
-                const response = JSON.parse(this.responseText);
-                console.log(response);
-            } else {
-                console.log('je passe par la');
-            }
-        };
-        request.open("POST", "http://localhost:3000/api/cameras/order");
-        // for more information
-        request.setRequestHeader("Content-Type", "application/json");
-        // send json -> service web
-        request.send(JSON.stringify(body));
-}
-*/
+
