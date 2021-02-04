@@ -1,5 +1,6 @@
 const cameraPrice = [];
 let products = localStorage.getItem("id");
+//let products = localStorage.getItem("id");
 let contact = {};
 
 // recover element of put in basket =>localStorage
@@ -109,26 +110,6 @@ function inputEmpty() {
         }     
 }
 
-function sendPost(input, checkbox) {
-    let formData = {contact, products};
-    console.log(formData);
-    fetch('http://localhost:3000/api/cameras/order', {
-    method: 'POST',
-    body: JSON.stringify(formData),
-    headers : {
-        "Content-Type": "application/json"
-    }
-})
-.then(response => response.json())
-.catch((error) => alert("Erreur : " + error))
-/* Envoie seulement si tout est ok
-    if((input === true) && (checkbox === true)) {
-        //postApi(formData);
-    }
-    */
-}
-
-
 function submitForm() {
     const btnSubmit = document.getElementById('btn-submit');
     btnSubmit.addEventListener('click', function (e) {
@@ -159,6 +140,25 @@ function getFormField(name, value) {
     getApi('http://localhost:3000/api/cameras/', findCameras);
 })();
 
+function sendPost(input, checkbox) {
+    let formData = {contact : contact , products : products};
+    console.log(formData);
+    fetch('http://localhost:3000/api/cameras/order', {
+    method: 'POST',
+    body: JSON.stringify(formData),
+    headers : {
+        "Content-Type": "application/json"
+    }
+})
+.then(response => response.json())
+.then(response => console.log(response))
+.catch((error) => alert("Erreur : " + error))
+/* Envoie seulement si tout est ok
+    if((input === true) && (checkbox === true)) {
+        //postApi(formData);
+    }
+    */
+}
 
 
 /*
