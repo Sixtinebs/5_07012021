@@ -109,6 +109,26 @@ function inputEmpty() {
         }     
 }
 
+function sendPost(input, checkbox) {
+    let formData = {contact, products};
+    console.log(formData);
+    fetch('http://localhost:3000/api/cameras/order', {
+    method: 'POST',
+    body: JSON.stringify(formData),
+    headers : {
+        "Content-Type": "application/json"
+    }
+})
+.then(response => response.json())
+.catch((error) => alert("Erreur : " + error))
+/* Envoie seulement si tout est ok
+    if((input === true) && (checkbox === true)) {
+        //postApi(formData);
+    }
+    */
+}
+
+
 function submitForm() {
     const btnSubmit = document.getElementById('btn-submit');
     btnSubmit.addEventListener('click', function (e) {
@@ -116,8 +136,7 @@ function submitForm() {
         const input = inputEmpty();
         const checkbox = checkboxEmpty();
         sendPost(input, checkbox);
-        console.log(input);
-        console.log(checkbox);
+
 
     })
 }
@@ -140,19 +159,6 @@ function getFormField(name, value) {
     getApi('http://localhost:3000/api/cameras/', findCameras);
 })();
 
-function sendPost(input, checkbox) {
-    let formData = {contact, products};
-    console.log(formData);
-    fetch('http://localhost:3000/api/cameras/order', {
-    method: 'POST',
-    body: JSON.stringify(formData),
-    headers : {
-        "Content-Type": "application/json"
-    }
-})
-.then(response => response.json())
-.catch((error) => alert("Erreur : " + error))
-}
 
 
 /*
