@@ -143,7 +143,6 @@ function getFormField(name, value) {
 
 function sendPost() {
         let formData = {contact : contact , products : product_id};
-        console.log(formData);
         fetch('http://localhost:3000/api/cameras/order', {
         method: 'POST',
         body: JSON.stringify(formData),
@@ -151,12 +150,10 @@ function sendPost() {
             "Content-Type": "application/json"
         }
     })
+    .then(response => response.json())
     .then(response => {
-        JSON.parse(response)
         localStorage.setItem('order_id', response.orderId);
-        console.log(response);
-        console.log(response.orderId);
-        //window.location.href = "confirmation.html";
+        window.location.href = "confirmation.html";
     })
     .catch((error) => alert("Erreur : " + error))
     }
