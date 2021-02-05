@@ -1,3 +1,4 @@
+//
 // recover param of url
 function getId() {
     let urlcourante = document.location.href;
@@ -34,25 +35,21 @@ function setElementStorage(param, card) {
     btnAddBasket.attributes = "role", "button";
     btnAddBasket.classList = "btn btn-orinoco";
     btnAddBasket.innerHTML = "Ajouter au panier";
-    optionSelect = [];
+    
     btnAddBasket.addEventListener('click', function () {
-        // transform object => string
-        let storedIds = JSON.parse(localStorage.getItem("id"));
-        if(storedIds === null) {
-            storedIds = [];
-        }
-        //storedIds.push(param);
-        // transform string => object
-        //localStorage.setItem("id", JSON.stringify(storedIds));
-
-        const option = document.getElementById('select');
-        // optionSelect.push(option.value);
-        // localStorage.setItem("option",JSON.stringify(optionSelect));
-        const camera = {};
-        camera['id'] = param;
-        camera['option'] = option.value;
+        const optionValue = document.getElementById('select').value;
+        let camera = JSON.parse(localStorage.getItem("camera"));
         console.log(camera);
-        localStorage.setItem("cameras", JSON.stringify(camera))
+        if(camera === null) {
+            camera = [];
+        }
+        camera.push({
+            'id': param,
+            'option': optionValue
+        })
+        localStorage.setItem('camera', JSON.stringify(camera));
+        console.log(camera);
+
     })
     card.appendChild(btnAddBasket);
 }

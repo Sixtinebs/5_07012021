@@ -9,7 +9,7 @@ function getLocalStorage() {
         localStorageGetItem = [];
         return localStorageGetItem;
     } else {
-        localStorageGetItem = JSON.parse(localStorage.getItem("id"));
+        localStorageGetItem = JSON.parse(localStorage.getItem("camera"));
         //findCameras()
         displayForm();
         return localStorageGetItem;
@@ -44,12 +44,19 @@ function validateFormRegex() {
 }
 // display element from basket
 function displayBasket(camera, option) {
-   
     const list = document.getElementById('listProducts');
     const listElements = document.createElement('li');
-    listElements.innerText = camera.name + ' ' + camera.price + '€';
+    listElements.innerText = camera.name + ' avec l\'option '+ option + '  ' + camera.price + '€';
     list.appendChild(listElements);
     productIds.push(camera._id);
+}
+
+function getOption() {
+    let options = JSON.parse(localStorage.getItem("option"));
+    console.log(options);
+    for(option of options) {
+        console.log(option);
+    }
 }
 // calcute the price total
 function totalPrice(listPrices) {
@@ -65,18 +72,13 @@ function totalPrice(listPrices) {
 //Compare Api and localStorage for find good element in basket
 function findCameras(camerasFromApi) {
     const cameraPrice = [];
-    console.log(camerasFromApi);
-    let options = JSON.parse(localStorage.getItem("option"));
-    console.log(options);
-    for(option of options) {
-        console.log(option);
-    }
+    
     const camerasFromStorage = getLocalStorage();
+    
     for (let i = 0; i < camerasFromApi.length; i++) {
         for (let k = 0; k < camerasFromStorage.length; k++) {
-
-            if (camerasFromApi[i]._id === camerasFromStorage[k]) {
-                displayBasket(camerasFromApi[i]);
+            if (camerasFromApi[i]._id === camerasFromStorage[k].id) {
+                displayBasket(camerasFromApi[i], camerasFromStorage[k].option);
                 cameraPrice.push(camerasFromApi[i].price);
             }
         }
