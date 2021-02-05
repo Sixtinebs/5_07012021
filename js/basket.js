@@ -1,7 +1,6 @@
 const cameraPrice = [];
 let product_id = [];
-let cameras = [];
-//let products = localStorage.getItem("id");
+//let cameras = [];
 let contact = {};
 
 // recover element of put in basket =>localStorage
@@ -13,10 +12,12 @@ function getLocalStorage() {
         return localStorageGetItem;
     } else {
         localStorageGetItem = JSON.parse(localStorage.getItem("id"));
+        //findCameras()
+        displayForm();
         return localStorageGetItem;
     }
 }
-// bouton pour valider le panier et passer la commande => afficher le formulaire
+//bouton for validate the basket and pass the order => display form 
 function displayForm() {
     const btnValideBasket = document.createElement('btn');
     btnValideBasket.classList = "btn btn-primary";
@@ -27,6 +28,7 @@ function displayForm() {
     btnValideBasket.addEventListener('click', function () {
         formOrder.style.display = 'block';
     })
+    validateEmail();
 };
 
 // display element from basket
@@ -38,7 +40,7 @@ function displayBasket(camera) {
     list.appendChild(listElements);
     product_id.push(camera._id);
 }
-
+// calcute the price total
 function totalPrice(listPrices) {
     let total = 0;
     for (let i = 0; i < listPrices.length; i++) {
@@ -52,6 +54,7 @@ function totalPrice(listPrices) {
 
 //Compare Api and localStorage for find good element in basket
 function findCameras(camerasFromApi) {
+    console.log(camerasFromApi);
     const camerasFromStorage = getLocalStorage();
     for (let i = 0; i < camerasFromApi.length; i++) {
         for (let k = 0; k < camerasFromStorage.length; k++) {
@@ -61,7 +64,7 @@ function findCameras(camerasFromApi) {
         }
     }
     totalPrice(cameraPrice);
-    //displayForm(); 
+
 }
 function validateEmail() {
     regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -81,7 +84,7 @@ function validateEmail() {
     }
 
 }
-//validateEmail();
+// bool if checkbox is empty
 function checkboxEmpty() {
     const gridCheck = document.getElementById('gridCheck');
     if(gridCheck.checked == false) {
@@ -91,6 +94,7 @@ function checkboxEmpty() {
         return true;
     }
 }
+//bool if all input is emptu
 function inputEmpty() {
     let inputEmpty = true;
     const inputs = document.querySelectorAll('.form-control');
@@ -126,14 +130,6 @@ function submitForm() {
 function getFormField(name, value) {
     contact[name] = value;
 }
-
-
-// récuperer la réponse
-// Renvoie sur la page de confirmation avec un mot + id de réponse
-// ajouter un bouton +/- aux articles
-//créer une page si aucun article dans le panier
-// finir la validation du formulaire
-
 
 //function main
 (function() {

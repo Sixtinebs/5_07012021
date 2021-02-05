@@ -1,7 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 #intro {
   display: flex;
   flex-flow: column;
-  background-color: aquamarine;
   margin: 20px;
 }
 #intro h1 {
@@ -10,6 +10,68 @@
 #intro p {
   align-self: flex-end;
   margin: 0 60px;
+}
+
+.degrade {
+  font-weight: 900;
+  font-size: 50px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#db8e34), to(#8863f4));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#yourProduct .card {
+  margin: 60px;
+}
+#yourProduct .card img {
+  height: 100%;
+  object-fit: cover;
+}
+
+#form-order {
+  display: none;
+}
+
+header {
+  background-color: #f1e9f0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+  box-shadow: 0px 4px 5px #fdc7f6c2;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+#img-logo {
+  width: 100px;
+  height: 50px;
+  margin-right: 5px;
+}
+
+main {
+  margin-top: 160px;
+}
+
+.btn-outline-orinoco {
+  border-color: #8863f4;
+  color: #8863f4;
+}
+.btn-outline-orinoco:hover {
+  background-color: #8863f4;
+  color: white;
+}
+
+.btn-orinoco {
+  background-color: #8863f4;
+  color: white;
+}
+.btn-orinoco:hover {
+  background-color: transparent;
+  color: #8863f4;
 }
 
 #products {
@@ -21,9 +83,18 @@
 #products img {
   height: 100%;
   object-fit: cover;
+  filter: hue-rotate(0deg);
+}
+#products img:hover {
+  filter: hue-rotate(280deg);
 }
 #products .card {
   margin-bottom: 50px;
+  border: none;
+  max-width: 540px;
+}
+#products .card:first-child {
+  max-width: 100%;
 }
 
 .card-body {
@@ -37,12 +108,16 @@
   align-self: flex-end;
 }
 
-#yourProduct .card {
-  margin: 60px;
+body {
+  font-family: "Roboto", sans-serif;
 }
-#yourProduct .card img {
-  height: 100%;
-  object-fit: cover;
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Open Sans", sans-serif;
+}
+
+h5 {
+  font-weight: 700;
 }
 
 /*# sourceMappingURL=style.css.map */

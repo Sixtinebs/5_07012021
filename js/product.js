@@ -32,7 +32,7 @@ function chooseOptionsCameras(options) {
 function setElementStorage(param, card) {
     const btnAddBasket = document.createElement('a');
     btnAddBasket.attributes = "role", "button";
-    btnAddBasket.classList = "btn btn-success";
+    btnAddBasket.classList = "btn btn-orinoco";
     btnAddBasket.innerHTML = "Ajouter au panier";
     console.log(btnAddBasket);
     btnAddBasket.addEventListener('click', function () {
@@ -92,7 +92,7 @@ function createHtmlCardProduct(element) {
     cardBody.appendChild(cardPrice);
     
     const btn = document.createElement('a');
-    btn.classList = "btn btn-outline-success btn-product";
+    btn.classList = "btn btn-outline-orinoco btn-product";
     btn.href = "basket.html";
     btn.attributes = "role", "button";
     btn.id = "btnPageBasket"

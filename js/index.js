@@ -1,6 +1,5 @@
 function createHtmlCard(element) {
     const card = document.createElement('div');
-    card.style.maxWidth = "540px";
     card.classList =  "card";
     products.appendChild(card);
     
@@ -41,7 +40,7 @@ function createHtmlCard(element) {
     cardBody.appendChild(cardPrice);
     
     const btn = document.createElement('a');
-    btn.classList = "btn btn-outline-success btn-product";
+    btn.classList = "btn btn-outline-orinoco btn-product";
     btn.href = "pages/product.html?id=" + element._id;
     btn.attributes = "role", "button";
     btn.innerText = "Voir plus";
