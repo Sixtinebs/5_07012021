@@ -1,24 +1,22 @@
-let urlcourante = document.location.href;
-const yourProduct = document.getElementById("yourProduct");
-const searchParams = new URLSearchParams(urlcourante);
-const param = getId();
 // recover param of url
 function getId() {
+    let urlcourante = document.location.href;
+    const searchParams = new URLSearchParams(urlcourante);
     for (let p of searchParams) {
         return p[1];
     }
 }
-// creat input for choose option cameras
+// create input for choose option cameras
 function chooseOptionsCameras(options) {
     const newDiv = document.createElement('div');
     const newSelect = document.createElement('select');
     newSelect.setAttribute("name", "options");
+    newSelect.id = "select"
     const btnPageBasket = document.getElementById('btnPageBasket');
     const card = document.getElementsByClassName("card-body")[0];
     for (option of options) {
         const newOption = document.createElement('option');
         newOption.setAttribute("value", option);
-
         let contenu = document.createTextNode(option);
         newDiv.appendChild(newSelect);
         newDiv.id = "selectOption";
@@ -28,27 +26,38 @@ function chooseOptionsCameras(options) {
         card.insertBefore(newDiv, btnPageBasket);
     }
 }
+
+
 //stock camera select => localStorage
 function setElementStorage(param, card) {
     const btnAddBasket = document.createElement('a');
     btnAddBasket.attributes = "role", "button";
     btnAddBasket.classList = "btn btn-orinoco";
     btnAddBasket.innerHTML = "Ajouter au panier";
-    console.log(btnAddBasket);
+    optionSelect = [];
     btnAddBasket.addEventListener('click', function () {
         // transform object => string
         let storedIds = JSON.parse(localStorage.getItem("id"));
         if(storedIds === null) {
-            storedIds =[];
+            storedIds = [];
         }
-        storedIds.push(param);
-        // transform string =>
-        localStorage.setItem("id", JSON.stringify(storedIds));
-        
-        console.log(storedIds);
+        //storedIds.push(param);
+        // transform string => object
+        //localStorage.setItem("id", JSON.stringify(storedIds));
+
+        const option = document.getElementById('select');
+        // optionSelect.push(option.value);
+        // localStorage.setItem("option",JSON.stringify(optionSelect));
+        const camera = {};
+        camera['id'] = param;
+        camera['option'] = option.value;
+        console.log(camera);
+        localStorage.setItem("cameras", JSON.stringify(camera))
     })
     card.appendChild(btnAddBasket);
 }
+
+
 function createHtmlCardProduct(element) {
     const yourProduct = document.getElementById('yourProduct');
     const card = document.createElement('div');
@@ -101,12 +110,15 @@ function createHtmlCardProduct(element) {
 }
 
 function pageMoreInfo(data) {
-
+    const param = getId();
     createHtmlCardProduct(data) 
     const card = document.getElementsByClassName("card-body")[0];
     chooseOptionsCameras(data.lenses);
     setElementStorage(param, card);
 }
+(function() {
+    const param = getId();
+    getApi('http://localhost:3000/api/cameras/'+ param, pageMoreInfo);
+})();
 
 
-getApi('http://localhost:3000/api/cameras/'+ param, pageMoreInfo);

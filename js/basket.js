@@ -1,6 +1,4 @@
-const cameraPrice = [];
-let product_id = [];
-//let cameras = [];
+let productIds = [];
 let contact = {};
 
 // recover element of put in basket =>localStorage
@@ -28,17 +26,30 @@ function displayForm() {
     btnValideBasket.addEventListener('click', function () {
         formOrder.style.display = 'block';
     })
-    validateEmail();
+    validateFormRegex()
+    
 };
-
+function validateFormRegex() {
+    regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const inputEmail4 = document.getElementById('inputEmail4');
+    regexPostalCode = /^[1-9]{1}[0-9]{4}$/;
+    const city = document.getElementById('inputCity');
+    regexName = /^[^-'][a-zA-Zàâäéèêëçùûüôö'-]+[^-']$/;
+    const lastName = document.getElementById('lastName');
+    const firstName = document.getElementById('firstName');
+    validateForm(regexEmail, inputEmail4);
+    validateForm(regexPostalCode, city);
+    validateForm(regexName, lastName);
+    validateForm(regexName, firstName);
+}
 // display element from basket
-function displayBasket(camera) {
-    cameraPrice.push(camera.price);
+function displayBasket(camera, option) {
+   
     const list = document.getElementById('listProducts');
     const listElements = document.createElement('li');
     listElements.innerText = camera.name + ' ' + camera.price + '€';
     list.appendChild(listElements);
-    product_id.push(camera._id);
+    productIds.push(camera._id);
 }
 // calcute the price total
 function totalPrice(listPrices) {
@@ -51,41 +62,45 @@ function totalPrice(listPrices) {
     document.getElementById('listProducts').appendChild(newP);
 }
 
-
 //Compare Api and localStorage for find good element in basket
 function findCameras(camerasFromApi) {
+    const cameraPrice = [];
     console.log(camerasFromApi);
+    let options = JSON.parse(localStorage.getItem("option"));
+    console.log(options);
+    for(option of options) {
+        console.log(option);
+    }
     const camerasFromStorage = getLocalStorage();
     for (let i = 0; i < camerasFromApi.length; i++) {
         for (let k = 0; k < camerasFromStorage.length; k++) {
+
             if (camerasFromApi[i]._id === camerasFromStorage[k]) {
                 displayBasket(camerasFromApi[i]);
+                cameraPrice.push(camerasFromApi[i].price);
             }
         }
     }
     totalPrice(cameraPrice);
 
 }
-function validateEmail() {
-    regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    const inputEmail4 = document.getElementById('inputEmail4');
-    inputEmail4.onchange = function () {
-        if (regexEmail.test(inputEmail4.value) === true && (!inputEmail4.value == "")) {
-            inputEmail4.style.border = " 2px solid #3ed000";
-            return true;
-        } else {
-            inputEmail4.style.border = " 2px solid #dc3545 ";
-            const notValide = document.createElement('p');
-            const parentNode = inputEmail4.parentNode;
-            notValide.innerText = "Your address email is not valide";
-            parentNode.insertBefore(notValide, inputEmail4);
-            return false;
+function validateForm(regex, input) {
+        input.onchange = function () {  
+            if((regex.test(input.value) === true)) {
+                input.style.border = " 2px solid #3ed000";
+                return true;
+            } else {
+                input.style.border = " 2px solid #dc3545 ";
+                const notValide = document.createElement('p');
+                const parentNode = input.parentNode;
+                notValide.innerText = "\"" + input.value + "\" is not valide";
+                parentNode.insertBefore(notValide, input);
+                return false;
+            }
         }
     }
-
-}
 // bool if checkbox is empty
-function checkboxEmpty() {
+function checkCheckboxEmpty() {
     const gridCheck = document.getElementById('gridCheck');
     if(gridCheck.checked == false) {
         gridCheck.style.border = "2px solid #dc3545";
@@ -95,7 +110,7 @@ function checkboxEmpty() {
     }
 }
 //bool if all input is emptu
-function inputEmpty() {
+function checkInputEmpty() {
     let inputEmpty = true;
     const inputs = document.querySelectorAll('.form-control');
         for (input of inputs) {
@@ -110,8 +125,7 @@ function inputEmpty() {
         if(inputEmpty === false ) {
             return false;
         } else {
-            return true
-            
+            return true 
         }     
 }
 
@@ -119,9 +133,9 @@ function submitForm() {
     const btnSubmit = document.getElementById('btn-submit');
     btnSubmit.addEventListener('click', function (e) {
         e.preventDefault();
-        const input = inputEmpty();
-        const checkbox = checkboxEmpty();
-        if((input === true) && (checkbox === true)) { 
+        const isInputEmpty = checkInputEmpty();
+        const isCheckboxEmpty = checkCheckboxEmpty();
+        if((isInputEmpty === true) && (isCheckboxEmpty === true)) { 
             sendPost();
         }
     })
@@ -138,11 +152,11 @@ function getFormField(name, value) {
 })();
 
 function sendPost() {
-        let formData = {contact : contact , products : product_id};
+        let formData = {contact: contact , products: productIds};
         fetch('http://localhost:3000/api/cameras/order', {
         method: 'POST',
         body: JSON.stringify(formData),
-        headers : {
+        headers: {
             "Content-Type": "application/json"
         }
     })
