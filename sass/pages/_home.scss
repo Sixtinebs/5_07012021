@@ -10,7 +10,16 @@
         margin: 0 60px;
     }
 }
-
+@media screen and (max-width: 710px) {
+    #intro {
+        h1 {
+            font-size: 40px;
+        }
+        p {
+            margin: 0;
+        }
+    }
+}
 
 .degrade {
     font-weight: 900;

@@ -12,6 +12,14 @@
   margin: 0 60px;
 }
 
+@media screen and (max-width: 710px) {
+  #intro h1 {
+    font-size: 40px;
+  }
+  #intro p {
+    margin: 0;
+  }
+}
 .degrade {
   font-weight: 900;
   font-size: 50px;
@@ -56,9 +64,16 @@ main {
   margin-top: 160px;
 }
 
+@media screen and (min-width: 710px) {
+  main {
+    padding: 0 120px;
+  }
+}
 .btn-outline-orinoco {
   border-color: #8863f4;
   color: #8863f4;
+  font-weight: 500;
+  border-radius: 12px;
 }
 .btn-outline-orinoco:hover {
   background-color: #8863f4;
@@ -68,6 +83,8 @@ main {
 .btn-orinoco {
   background-color: #8863f4;
   color: white;
+  font-weight: 500;
+  border-radius: 12px;
 }
 .btn-orinoco:hover {
   background-color: transparent;
@@ -93,13 +110,12 @@ main {
   border: none;
   max-width: 540px;
 }
-#products .card:first-child {
-  max-width: 100%;
-}
 
 .card-body {
   display: flex;
   flex-flow: column;
+  height: 100%;
+  position: relative;
 }
 .card-body .card-title {
   align-self: center;

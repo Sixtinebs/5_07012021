@@ -34,10 +34,10 @@ function createHtmlCard(element) {
     cardText.innerText = element.description;
     cardBody.appendChild(cardText);
 
-    const cardPrice = document.createElement('p');
-    cardPrice.classList = "card-price";
-    cardPrice.innerText = element.price + '€';
-    cardBody.appendChild(cardPrice);
+    // const cardPrice = document.createElement('p');
+    // cardPrice.classList = "card-price";
+    // cardPrice.innerText = element.price + '€';
+    // cardBody.appendChild(cardPrice);
     
     const btn = document.createElement('a');
     btn.classList = "btn btn-outline-orinoco btn-product";

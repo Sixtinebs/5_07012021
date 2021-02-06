@@ -15,15 +15,14 @@
         margin-bottom: 50px;
         border: none;
         max-width: 540px;
-        &:first-child {
-            max-width: 100%;
-        }
+
     }
 }
- 
 .card-body {
     display: flex;
     flex-flow: column;
+    height: 100%;
+    position: relative;
     .card-title {
         align-self: center;
     }

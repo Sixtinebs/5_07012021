@@ -1,6 +1,8 @@
 .btn-outline-orinoco {
     border-color: $color-secondary;
     color: $color-secondary;
+    font-weight: 500;
+    border-radius: 12px;
     &:hover {
         background-color:$color-secondary;
         color: white;
@@ -9,6 +11,8 @@
 .btn-orinoco {
     background-color: $color-secondary;
     color: white;
+    font-weight: 500;
+    border-radius: 12px;
     &:hover {
         background-color: transparent;
         color: $color-secondary;
