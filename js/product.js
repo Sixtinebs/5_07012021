@@ -12,7 +12,9 @@ function chooseOptionsCameras(options) {
     const newDiv = document.createElement('div');
     const newSelect = document.createElement('select');
     newSelect.setAttribute("name", "options");
-    newSelect.id = "select"
+    newSelect.id = "select";
+    newSelect.classList = "form-select";
+    newSelect.attributes= 'aria-label', 'Select option for camera';
     const btnPageBasket = document.getElementById('btnPageBasket');
     const card = document.getElementsByClassName("card-body")[0];
     for (option of options) {
@@ -21,6 +23,7 @@ function chooseOptionsCameras(options) {
         let contenu = document.createTextNode(option);
         newDiv.appendChild(newSelect);
         newDiv.id = "selectOption";
+
         newSelect.appendChild(newOption);
         newOption.appendChild(contenu);
 
@@ -94,7 +97,7 @@ function createHtmlCardProduct(element) {
 
     const cardPrice = document.createElement('p');
     cardPrice.classList = "card-price";
-    cardPrice.innerText = element.price + '€';
+    cardPrice.innerText = element.price/100 + '€';
     cardBody.appendChild(cardPrice);
     
     const btn = document.createElement('a');

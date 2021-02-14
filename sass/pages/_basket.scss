@@ -1,3 +1,55 @@
+@import '../components/buttons';
 #form-order {
     display: none;
+    margin: 70px;
+    input, select{
+        border: 1px solid $color-secondary;
+        border-radius: $border-radius;
+        color: $color-tertiary;
+        &:focus {
+            box-shadow: 0 0 0 4px $color-secondary-light;
+        }
+    }
+}
+#list-basket {
+    button {
+        @include btn-orinoco;
+    }
+
+}
+#label-name {
+    label {
+        width: 100%;
+    }
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    border: 1px solid $color-secondary;
+}
+ #listProducts{
+     th, td {
+            padding: 10px;
+     }
+     thead {
+        background-color: $color-secondary-light;
+     }
+     caption {
+        caption-side: top;
+        font-weight: 700;
+        font-size: 25px;
+        text-align: center;
+        border-collapse: separate;
+        margin: 20px;
+     }
+ }
+#total-price {
+    text-align: end;
+    margin: 30px;
+    font-size: 30px;
+}
+#btn-submit {
+    @include btn-outline-orinoco;
+    float: right;
 }

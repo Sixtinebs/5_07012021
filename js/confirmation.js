@@ -7,7 +7,7 @@ function getLocalStorageOrderId() {
 function displayMessageConfirmation(orderId) {
     const sectionHtml = document.getElementById('order-id-message');
     const newP = document.createElement('p');
-    newP.innerText = 'Votre numéros de commande:' + orderId + 'Merci pour votre confiance, vous recevrez un e-mail de confirmation. À bientôt :).';
+    newP.innerText = 'Thank you for your order, your number order :'+ orderId + ' Thank you for your trust you will receive a confirmation email soon ! =).' ;
     sectionHtml.appendChild(newP);
     window.localStorage.clear();
 }

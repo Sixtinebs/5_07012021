@@ -8,9 +8,9 @@ function findCameras(camerasFromApi) {
     for (let i = 0; i < camerasFromApi.length; i++) {
         for (let k = 0; k < camerasFromStorage.length; k++) {
             if (camerasFromApi[i]._id === camerasFromStorage[k].id) {
-
-                displayBasket(camerasFromApi[i], camerasFromStorage[k].option);
-                cameraPrice.push(camerasFromApi[i].price);
+                priceEuro = camerasFromApi[i].price / 100;
+                displayBasket(priceEuro, camerasFromApi[i], camerasFromStorage[k].option);
+                cameraPrice.push(priceEuro);
             }
         }
     }
@@ -24,8 +24,9 @@ function totalPrice(listPrices) {
         total += listPrices[i];
     }
     const newP = document.createElement('p');
+    newP.id = 'total-price';
     newP.innerText = 'Total ' + total + '€';
-    document.getElementById('listProducts').appendChild(newP);
+    document.getElementById('listProducts').after(newP);
 }
 
 
@@ -44,26 +45,28 @@ function getLocalStorage() {
 }
 //bouton for validate the basket and pass the order => display form 
 function displayForm() {
-    const btnValideBasket = document.createElement('btn');
-    btnValideBasket.classList = "btn btn-primary";
-    btnValideBasket.innerText = "valider la commande";
+    const btnValideBasket = document.createElement('button');
+    btnValideBasket.classList = "btn btn-orinoco";
+    btnValideBasket.innerText = "Valider la commande";
     const listBasket = document.getElementById('list-basket');
     listBasket.appendChild(btnValideBasket);
     const formOrder = document.getElementById('form-order');
     btnValideBasket.addEventListener('click', function () {
         formOrder.style.display = 'block';
-        validateFormRegex();
-        
+        validateFormRegex(); 
+        btnValideBasket.style.display = 'none'; 
     })
     
     
 };
 // display element from basket
-function displayBasket(camera, option) {
-    const list = document.getElementById('listProducts');
-    const listElements = document.createElement('li');
-    listElements.innerText = camera.name + ' avec l\'option '+ option + '  ' + camera.price + '€';
+function displayBasket(price, camera, option) {
+    const list = document.querySelector('#listProducts tbody');
+    const listElements = document.createElement('tr');
     list.appendChild(listElements);
+    listElements.innerHTML = '<td>' + camera.name + '</td>';
+    listElements.innerHTML += ' <td>' + option + '</td>'; 
+    listElements.innerHTML += ' <td>' + price + '€ </td>';    
     productIds.push(camera._id);
 }
 
