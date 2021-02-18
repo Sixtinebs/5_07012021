@@ -33,11 +33,6 @@ function createHtmlCard(element) {
     cardText.classList = "card-text";
     cardText.innerText = element.description;
     cardBody.appendChild(cardText);
-
-    // const cardPrice = document.createElement('p');
-    // cardPrice.classList = "card-price";
-    // cardPrice.innerText = element.price + '€';
-    // cardBody.appendChild(cardPrice);
     
     const btn = document.createElement('a');
     btn.classList = "btn btn-outline-orinoco btn-product";
@@ -46,7 +41,6 @@ function createHtmlCard(element) {
     btn.innerText = "Voir plus";
     cardBody.appendChild(btn);
 }
-
 function displayListProducts(response) {
     for(let i in response) {
         createHtmlCard(response[i])  
@@ -54,6 +48,10 @@ function displayListProducts(response) {
 }
 
 
-getApi("http://localhost:3000/api/cameras", displayListProducts);
+getApi("http://localhost:3000/api/cameras").then(response =>{ 
+    displayListProducts(response);
+}).catch(error => {
+    console.log(error)
+});
 
 

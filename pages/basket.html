@@ -9,15 +9,14 @@
   <!-- Bootstrap CSS-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-</head>
+  
 
 <body>
   <header>
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="../index.html">
-          <img id="img-logo" src="../src/img/logo.png" alt="he logo Orinico" class="d-inline-block align-top">
-          Orinico
+          <img id="img-logo" src="../src/img/logo.png" alt="le logo Orinico" class="d-inline-block align-top" />
         </a>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
@@ -63,9 +62,12 @@
     <section id="form-order">
       <div class="container">
         <form class="row g-3">
-          <div class="input-group col-12" id="label-name">
-            <label class="form-label">First and last name</label>
+          <div class="col-md-6" id="label-name">
+            <label class="form-label">First name</label>
             <input type="text" aria-label="First name" id="firstName" class="form-control" value="" name="firstName" required placeholder="Jean">
+          </div>
+          <div class="col-md-6" id="label-name">
+            <label class="form-label">Last name</label>
             <input type="text" aria-label="Last name" id="lastName" class="form-control" value="" name="lastName" required placeholder="Dupont">
           </div>
           <div class="col-md-6">

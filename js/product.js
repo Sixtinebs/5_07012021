@@ -1,4 +1,3 @@
-//
 // recover param of url
 function getId() {
     let urlcourante = document.location.href;
@@ -23,26 +22,25 @@ function chooseOptionsCameras(options) {
         let contenu = document.createTextNode(option);
         newDiv.appendChild(newSelect);
         newDiv.id = "selectOption";
-
         newSelect.appendChild(newOption);
         newOption.appendChild(contenu);
 
         card.insertBefore(newDiv, btnPageBasket);
     }
 }
-
-
 //stock camera select => localStorage
-function setElementStorage(param, card) {
+function setElementStorage(param) {
     const btnAddBasket = document.createElement('a');
+    const card = document.getElementsByClassName("card-body")[0];
     btnAddBasket.attributes = "role", "button";
     btnAddBasket.classList = "btn btn-orinoco";
+    btnAddBasket.id ="btn-shop";
     btnAddBasket.innerHTML = "Ajouter au panier";
+    //btnAddBasket.innerHTML = '<i class="fas fa-shopping-cart"></i>'
     
     btnAddBasket.addEventListener('click', function () {
         const optionValue = document.getElementById('select').value;
         let camera = JSON.parse(localStorage.getItem("camera"));
-        console.log(camera);
         if(camera === null) {
             camera = [];
         }
@@ -51,13 +49,9 @@ function setElementStorage(param, card) {
             'option': optionValue
         })
         localStorage.setItem('camera', JSON.stringify(camera));
-        console.log(camera);
-
     })
     card.appendChild(btnAddBasket);
 }
-
-
 function createHtmlCardProduct(element) {
     const yourProduct = document.getElementById('yourProduct');
     const card = document.createElement('div');
@@ -108,17 +102,18 @@ function createHtmlCardProduct(element) {
     btn.innerText = "Voir le panier";
     cardBody.appendChild(btn);
 }
-
 function pageMoreInfo(data) {
     const param = getId();
     createHtmlCardProduct(data) 
-    const card = document.getElementsByClassName("card-body")[0];
     chooseOptionsCameras(data.lenses);
-    setElementStorage(param, card);
+    setElementStorage(param);
 }
-(function() {
-    const param = getId();
-    getApi('http://localhost:3000/api/cameras/'+ param, pageMoreInfo);
-})();
+
+getApi('http://localhost:3000/api/cameras/'+ getId()).then(response => {
+    pageMoreInfo(response);
+}).catch(error => {
+    console.log(error)
+});
+
 
 

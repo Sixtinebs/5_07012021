@@ -2,21 +2,50 @@
 #form-order {
     display: none;
     margin: 70px;
+    background-color: $color-secondary-light;
+    padding: 40px;
+    border-radius: 12px;
+    color: $color-tertiary;
     input, select{
-        border: 1px solid $color-secondary;
-        border-radius: $border-radius;
+        border: none;
+        border-bottom: 2px solid $color-secondary;
+        border-radius: 0;
+        background-color: #fff6;
+        padding: 11px;
         color: $color-tertiary;
         &:focus {
             box-shadow: 0 0 0 4px $color-secondary-light;
         }
+        &:hover {
+            border-bottom: 3px solid $color-secondary;
+        }
+    }
+    #gridCheck, #inputState{
+        border: 2px solid $color-secondary
+    }
+    #gridCheck {
+        background-color: $color-secondary;
+    }
+    .form-check {
+        display: flex;
+        label {
+            align-self: center;
+            margin-left: 4px;
+        }
+    }
+    .notValide {
+        color: red;
+        font-size: 10px;
     }
 }
+
 #list-basket {
     button {
         @include btn-orinoco;
     }
 
 }
+
 #label-name {
     label {
         width: 100%;
@@ -52,4 +81,5 @@ table {
 #btn-submit {
     @include btn-outline-orinoco;
     float: right;
+    padding: $padding-btn;
 }
