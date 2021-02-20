@@ -15,7 +15,7 @@ function findCameras(camerasFromApi) {
     }
     totalPrice(cameraPrice);
 }
-// calcute the price total
+// sum the price total
 function totalPrice(listPrices) {
     let total = 0;
     for (let i = 0; i < listPrices.length; i++) {
@@ -52,8 +52,8 @@ function displayForm() {
     btnValideBasket.addEventListener('click', function () {
         formOrder.style.display = 'block';
         //validateFormRegex(); 
-        btnValideBasket.style.display = 'none'; 
-    }) 
+        btnValideBasket.style.display = 'none';
+    })
 };
 // display element from basket
 function displayBasket(price, camera, option) {
@@ -61,11 +61,16 @@ function displayBasket(price, camera, option) {
     const listElements = document.createElement('tr');
     list.appendChild(listElements);
     listElements.innerHTML = '<td>' + camera.name + '</td>';
-    listElements.innerHTML += ' <td>' + option + '</td>'; 
-    listElements.innerHTML += ' <td>' + price + '€ </td>';    
+    listElements.innerHTML += '<td>' + option + '</td>';
+    listElements.innerHTML += '<td>' + price + '€ </td>';
+    const td = document.createElement('td');
+    td.innerText = 'X';
+    listElements.appendChild(td);
     productIds.push(camera._id);
+    td.addEventListener('click', function () {
+        td.parentNode.remove();
+    })
 }
-
 function validateFormRegex() {
     let isValidateForm = 0;
     regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -79,58 +84,58 @@ function validateFormRegex() {
     const address = document.getElementById('inputAddress');
 
     const isEmailValide = validateForm(regexEmail, inputEmail4);
-    const isPostalCodeValide = validateForm(regexPostalCode, city);
+    const isPostalCodeValid = validateForm(regexPostalCode, city);
     const isLastNameValid = validateForm(regexName, lastName);
-    const isFirstNameValide = validateForm(regexName, firstName);
+    const isFirstNameValid = validateForm(regexName, firstName);
     const isAddressValid = validateForm(regexAdrress, address);
 
     isInputValid(isEmailValide);
-    isInputValid(isPostalCodeValide);
+    isInputValid(isPostalCodeValid);
     isInputValid(isLastNameValid);
-    isInputValid(isFirstNameValide);
+    isInputValid(isFirstNameValid);
     isInputValid(isAddressValid);
     function isInputValid(input) {
-        if(input === true) {
+        if (input === true) {
             isValidateForm++
         }
     }
-    if(isValidateForm === 5) {
+    if (isValidateForm === 5) {
         return true;
     } else {
         return false;
-    } 
+    }
 }
 function validateForm(regex, input) {
-    const inputId = document.getElementById(input.id+"-notValide")
-        if((regex.test(input.value) === true) ) {
-            //const notValide = document.getElementById(input.id+"-notValide");
-            if(inputId !== null) {
-                inputId.remove();
-            }
-            input.style.border = " 2px solid #3ed000";
-            setFormField(input.name, input.value);
-            return true;
-        } else {
-            if(!inputId){
-                input.style.border = " 2px solid #dc3545 ";
-                const notValide = document.createElement('p');
-                notValide.id = input.id+"-notValide";
-                notValide.classList = "notValide";
-                const parentNode = input.parentNode;
-                notValide.innerText = "\"" + input.value + "\" is not valide";
-                parentNode.insertBefore(notValide, input.nextSibling);
-            }else {
-                const text = inputId.innerHTML;
-                const newText = text.replace(text , "\"" + input.value + "\" is not valide" );
-                document.getElementById(input.id+"-notValide").innerHTML =  newText;
-            }
-            return false;
+    const inputId = document.getElementById(input.id + "-notValid")
+    if ((regex.test(input.value) === true)) {
+        //const notValid = document.getElementById(input.id+"-notValid");
+        if (inputId !== null) {
+            inputId.remove();
         }
+        input.style.border = " 2px solid #3ed000";
+        setFormField(input.name, input.value);
+        return true;
+    } else {
+        if (!inputId) {
+            input.style.border = " 2px solid #dc3545 ";
+            const notValid = document.createElement('p');
+            notValid.id = input.id + "-notValid";
+            notValid.classList = "notValid";
+            const parentNode = input.parentNode;
+            notValid.innerText = "\"" + input.value + "\" is not valid";
+            parentNode.insertBefore(notValid, input.nextSibling);
+        } else {
+            const text = inputId.innerHTML;
+            const newText = text.replace(text, "\"" + input.value + "\" is not valid");
+            document.getElementById(input.id + "-notValid").innerHTML = newText;
+        }
+        return false;
+    }
 }
 // bool if checkbox is empty
 function checkCheckboxEmpty() {
     const gridCheck = document.getElementById('gridCheck');
-    if(gridCheck.checked == false) {
+    if (gridCheck.checked == false) {
         gridCheck.style.border = "2px solid #dc3545";
         return false;
     } else {
@@ -144,7 +149,7 @@ function submitForm() {
         e.preventDefault();
         const isCheckboxEmpty = checkCheckboxEmpty();
         const isFormValide = validateFormRegex()
-        if((isCheckboxEmpty === true) && (isFormValide === true)) { 
+        if ((isCheckboxEmpty === true) && (isFormValide === true)) {
             sendPost();
         }
     })
@@ -161,21 +166,21 @@ getApi('http://localhost:3000/api/cameras/').then(response => {
 })
 
 function sendPost() {
-        let formData = {contact: contact , products: productIds};
-        fetch('http://localhost:3000/api/cameras/order', {
+    let formData = { contact: contact, products: productIds };
+    fetch('http://localhost:3000/api/cameras/order', {
         method: 'POST',
         body: JSON.stringify(formData),
         headers: {
             "Content-Type": "application/json"
         }
     })
-    .then(response => response.json())
-    .then(response => {
-        localStorage.setItem('order_id', response.orderId);
-        window.location.href = "confirmation.html";
-    })
-    .catch((error) => alert("Erreur : " + error))
-    }
+        .then(response => response.json())
+        .then(response => {
+            localStorage.setItem('order_id', response.orderId);
+            window.location.href = "confirmation.html";
+        })
+        .catch((error) => alert("Erreur : " + error))
+}
 
 
 

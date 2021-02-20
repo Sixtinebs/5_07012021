@@ -204,6 +204,10 @@ table {
   color: white;
 }
 
+.delete {
+  cursor: pointer;
+}
+
 #order-id-message {
   background-color: #f1e9f0;
   padding: 10px;
