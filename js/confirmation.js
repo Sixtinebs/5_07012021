@@ -8,19 +8,22 @@ function getLocalStorageOrderId() {
     }
     redirectHomePage();
 }
+
 function displayMessageError() {
     const sectionHtml = document.getElementById('order-id-message');
     const newP = document.createElement('p');
-    newP.innerText= "We are sorry, an error occurred during the transaction";
+    newP.innerText= "Une erreur est survenu durant la transaction";
     sectionHtml.appendChild(newP);
 }
+
 function displayMessageConfirmation(orderId, sum) {
     const sectionHtml = document.getElementById('order-id-message');
     const newP = document.createElement('p');
-    newP.innerText = 'Thank you for your order. Your total of purchase are  '+ sum +'€ and your number order: '+ orderId + '. Thank you for your trust you will receive a confirmation email soon ! =).' ;
+    newP.innerText = 'Merci pour votre commande. Le prix total est de '+ sum +'€ et votre numéro de commande est le suivant: '+ orderId + '. Merci pour votre confiance, un email de confirmation va vous être envoyé ! A bientôt !' ;
     sectionHtml.appendChild(newP);
     window.localStorage.clear();
 }
+
 function redirectHomePage() {
     const redirect = document.getElementById('times');
     time = 20;
@@ -32,6 +35,7 @@ function redirectHomePage() {
             }
         }, 1000);
 }
+
 (function() {
     getLocalStorageOrderId();
 

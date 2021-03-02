@@ -8,13 +8,14 @@ function findCameras(camerasFromApi) {
         for (let k = 0; k < camerasFromStorage.length; k++) {
             if (camerasFromApi[i]._id === camerasFromStorage[k].id) {
                 priceEuro = camerasFromApi[i].price / 100;
-                displayBasket(priceEuro, camerasFromApi[i], camerasFromStorage[k].option);
+                displayBasket(priceEuro, camerasFromApi[i], camerasFromStorage[k]);
                 cameraPrice.push(priceEuro);
             }
         }
     }
     totalPrice(cameraPrice);
 }
+
 // sum the price total
 function totalPrice(listPrices) {
     let total = 0;
@@ -27,6 +28,7 @@ function totalPrice(listPrices) {
     document.getElementById('listProducts').after(newP);
     localStorage.setItem('sum', total);
 }
+
 // recover element of put in basket =>localStorage
 function getLocalStorage() {
     //if localStorage is empty
@@ -40,6 +42,7 @@ function getLocalStorage() {
         return localStorageGetItem;
     }
 }
+
 //bouton for validate the basket and pass the order => display form 
 function displayForm() {
     const btnValideBasket = document.createElement('button');
@@ -54,23 +57,25 @@ function displayForm() {
         //validateFormRegex(); 
         btnValideBasket.style.display = 'none';
     })
+    submitForm();
 };
+
+let value = 0;
 // display element from basket
-function displayBasket(price, camera, option) {
+function displayBasket(price, camera, cameraLocal) {
     const list = document.querySelector('#listProducts tbody');
     const listElements = document.createElement('tr');
     list.appendChild(listElements);
+    listElements.classList = "product-list";
+   
+    listElements.setAttribute("value" , value++);
     listElements.innerHTML = '<td>' + camera.name + '</td>';
-    listElements.innerHTML += '<td>' + option + '</td>';
+    listElements.innerHTML += '<td>' + cameraLocal.option + '</td>';
     listElements.innerHTML += '<td>' + price + '€ </td>';
-    const td = document.createElement('td');
-    td.innerText = 'X';
-    listElements.appendChild(td);
+
     productIds.push(camera._id);
-    td.addEventListener('click', function () {
-        td.parentNode.remove();
-    })
 }
+
 function validateFormRegex() {
     let isValidateForm = 0;
     regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -105,10 +110,10 @@ function validateFormRegex() {
         return false;
     }
 }
+
 function validateForm(regex, input) {
     const inputId = document.getElementById(input.id + "-notValid")
     if ((regex.test(input.value) === true)) {
-        //const notValid = document.getElementById(input.id+"-notValid");
         if (inputId !== null) {
             inputId.remove();
         }
@@ -122,16 +127,17 @@ function validateForm(regex, input) {
             notValid.id = input.id + "-notValid";
             notValid.classList = "notValid";
             const parentNode = input.parentNode;
-            notValid.innerText = "\"" + input.value + "\" is not valid";
+            notValid.innerText = "\"" + input.value + "\" n'est pas valide";
             parentNode.insertBefore(notValid, input.nextSibling);
         } else {
             const text = inputId.innerHTML;
-            const newText = text.replace(text, "\"" + input.value + "\" is not valid");
+            const newText = text.replace(text, "\"" + input.value + "\" n'est pas valide");
             document.getElementById(input.id + "-notValid").innerHTML = newText;
         }
         return false;
     }
 }
+
 // bool if checkbox is empty
 function checkCheckboxEmpty() {
     const gridCheck = document.getElementById('gridCheck');
@@ -143,6 +149,7 @@ function checkCheckboxEmpty() {
         return true;
     }
 }
+
 function submitForm() {
     const btnSubmit = document.getElementById('btn-submit');
     btnSubmit.addEventListener('click', function (e) {
@@ -154,11 +161,13 @@ function submitForm() {
         }
     })
 }
+
 function setFormField(name, value) {
     contact[name] = value;
 }
 
-submitForm();
+//submitForm();
+
 getApi('http://localhost:3000/api/cameras/').then(response => {
     findCameras(response);
 }).catch(error => {

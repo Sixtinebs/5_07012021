@@ -41,6 +41,7 @@ function createHtmlCard(element) {
     btn.innerText = "Voir plus";
     cardBody.appendChild(btn);
 }
+
 function displayListProducts(response) {
     for(let i in response) {
         createHtmlCard(response[i])  

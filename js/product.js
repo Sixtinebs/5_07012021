@@ -1,11 +1,12 @@
 // recover param of url
 function getId() {
-    let urlcourante = document.location.href;
-    const searchParams = new URLSearchParams(urlcourante);
+    let currentUrl = document.location.href;
+    const searchParams = new URLSearchParams(currentUrl);
     for (let p of searchParams) {
         return p[1];
     }
 }
+
 // create input for choose option cameras
 function chooseOptionsCameras(options) {
     const newDiv = document.createElement('div');
@@ -16,6 +17,7 @@ function chooseOptionsCameras(options) {
     newSelect.attributes= 'aria-label', 'Select option for camera';
     const btnPageBasket = document.getElementById('btnPageBasket');
     const card = document.getElementsByClassName("card-body")[0];
+
     for (option of options) {
         const newOption = document.createElement('option');
         newOption.setAttribute("value", option);
@@ -28,6 +30,7 @@ function chooseOptionsCameras(options) {
         card.insertBefore(newDiv, btnPageBasket);
     }
 }
+
 //stock camera select => localStorage
 function setElementStorage(param) {
     const btnAddBasket = document.createElement('a');
@@ -36,7 +39,6 @@ function setElementStorage(param) {
     btnAddBasket.classList = "btn btn-orinoco";
     btnAddBasket.id ="btn-shop";
     btnAddBasket.innerHTML = "Ajouter au panier";
-    //btnAddBasket.innerHTML = '<i class="fas fa-shopping-cart"></i>'
     
     btnAddBasket.addEventListener('click', function () {
         const optionValue = document.getElementById('select').value;
@@ -52,6 +54,7 @@ function setElementStorage(param) {
     })
     card.appendChild(btnAddBasket);
 }
+
 function createHtmlCardProduct(element) {
     const yourProduct = document.getElementById('yourProduct');
     const card = document.createElement('div');
@@ -102,6 +105,7 @@ function createHtmlCardProduct(element) {
     btn.innerText = "Voir le panier";
     cardBody.appendChild(btn);
 }
+
 function pageMoreInfo(data) {
     const param = getId();
     createHtmlCardProduct(data) 
